@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AB Sample - Main</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body data-page="main">
+  <div class="container">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <h1>AB Sample Shop</h1>
+      </div>
+
+      <div class="badges">
+        <div class="badge">Variant: <strong data-role="variant">?</strong></div>
+        <button class="btn" data-track-id="reset_variant" type="button">실험 리셋</button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>상품 목록</h2>
+        <p class="sub">메인 → 상세 → 결제 흐름으로 테스트하세요. 버튼/문구가 A/B로 달라집니다.</p>
+
+        <div class="products">
+          <div class="product">
+            <div class="title">네오 커피</div>
+            <div class="desc">원두 500g · 산미 낮음</div>
+            <div class="row">
+              <div class="price">12,900원</div>
+              <a class="btn primary"
+                 data-track-id="open_detail_neo"
+                 data-keep-product="1"
+                 href="/detail?product=neo-coffee">상세</a>
+            </div>
+          </div>
+
+          <div class="product">
+            <div class="title">루나 티</div>
+            <div class="desc">티백 20개 · 향긋</div>
+            <div class="row">
+              <div class="price">9,900원</div>
+              <a class="btn primary"
+                 data-track-id="open_detail_luna"
+                 data-keep-product="1"
+                 href="/detail?product=luna-tea">상세</a>
+            </div>
+          </div>
+
+          <div class="product">
+            <div class="title">오로라 머그</div>
+            <div class="desc">세라믹 · 350ml</div>
+            <div class="row">
+              <div class="price">15,900원</div>
+              <a class="btn primary"
+                 data-track-id="open_detail_mug"
+                 data-keep-product="1"
+                 href="/detail?product=aurora-mug">상세</a>
+            </div>
+          </div>
+
+          <div class="product">
+            <div class="title">픽셀 스낵</div>
+            <div class="desc">바삭 · 8봉</div>
+            <div class="row">
+              <div class="price">5,900원</div>
+              <a class="btn primary"
+                 data-track-id="open_detail_snack"
+                 data-keep-product="1"
+                 href="/detail?product=pixel-snack">상세</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="hr"></div>
+
+        <div class="notice">
+          <span class="pill">Tip</span>
+          <div>
+            다음 단계에서 SDK를 붙일 거라서, 클릭/버튼마다 <code>data-track-id</code>가 들어가 있어요.
+            <br/>A/B 변화는 <strong>문구/강조/배치</strong>처럼 단순한 것부터 시작하는 게 가장 빨라요.
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>오늘의 미니 KPI (더미)</h2>
+        <p class="sub">지금은 예시 카드입니다. 다음 단계에서 실제 이벤트로 바뀝니다.</p>
+
+        <div class="kpis">
+          <div class="kpi">
+            <div class="label">세션</div>
+            <div class="value">—</div>
+          </div>
+          <div class="kpi">
+            <div class="label">전환율(CVR)</div>
+            <div class="value">—</div>
+          </div>
+          <div class="kpi">
+            <div class="label">이탈률(Bounce)</div>
+            <div class="value">—</div>
+          </div>
+        </div>
+
+        <div class="footer">
+          다음 단계: SDK에서 page_view/click 이벤트를 수집해서 이 KPI가 실제 값으로 채워지게 만들 거예요.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
+  <script src="/sdk.js"></script>
+<script>
+  // SDK 설치
+  window.__sdk = MiniSDK.create({
+    endpoint: "/collect",
+    appId: "ab-sample",
+    schemaVersion: 1,
+    debug: true
+  });
+  window.__sdk.install();
+</script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AB Sample - Checkout</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body data-page="checkout">
+  <div class="container">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <h1>결제</h1>
+      </div>
+
+      <div class="badges">
+        <div class="badge">Variant: <strong data-role="variant">?</strong></div>
+        <a class="btn" data-track-id="go_detail" data-keep-product="1" href="/detail">상세</a>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>주문 정보</h2>
+        <p class="sub">이 페이지에서 “결제 완료” 클릭이 전환 이벤트가 됩니다.</p>
+
+        <div class="product">
+          <div class="title" data-role="product-name">—</div>
+          <div class="desc" data-role="product-meta">—</div>
+          <div class="row">
+            <div class="price" data-role="product-price">—</div>
+            <span class="badge">수량 1</span>
+          </div>
+        </div>
+
+        <div class="hr"></div>
+
+        <div class="notice">
+          <span class="pill">Note</span>
+          <div>
+            다음 단계(SDK)에서 <code>pay_btn</code> 클릭을 수집해서,
+            A/B별 결제 완료율(CVR)을 대시보드로 비교합니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>결제 진행</h2>
+        <p class="sub">실험 대상: 결제 버튼 문구/강조</p>
+
+        <button class="btn primary"
+                data-track-id="pay_btn"
+                type="button"
+                onclick="
+                    window.__sdk && window.__sdk.track('checkout_complete', { step: 'pay_btn' });
+                    window.__sdk && window.__sdk.flush();
+                    alert('결제 완료(더미)! 이제 메인으로 돌아가세요.');
+                    location.href='/';
+                "
+        >
+          결제 완료
+        </button>
+
+        <div class="hr"></div>
+
+        <a class="btn" data-track-id="cancel_checkout" href="/">취소(메인)</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
+  <script src="/sdk.js"></script>
+<script>
+  // SDK 설치
+  window.__sdk = MiniSDK.create({
+    endpoint: "/collect",
+    appId: "ab-sample",
+    schemaVersion: 1,
+    debug: true
+  });
+  window.__sdk.install();
+</script>
+</body>
+</html>

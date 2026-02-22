@@ -1,0 +1,228 @@
+:root {
+  --bg: #0f1115;
+  --card: #171a21;
+  --text: #e9eef6;
+  --muted: #9aa7b8;
+  --line: #2a2f3a;
+  --accent: #6aa9ff;
+  --good: #3bd671;
+  --warn: #ffb020;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 28px 18px 60px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  background: rgba(23, 26, 33, 0.8);
+  backdrop-filter: blur(6px);
+  border-radius: 14px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo {
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--accent), #9a6aff);
+}
+.brand h1 {
+  font-size: 16px;
+  margin: 0;
+  letter-spacing: 0.2px;
+}
+.badges {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.badge {
+  font-size: 12px;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+.badge strong { color: var(--text); }
+
+.grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 16px;
+}
+
+.card {
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.card h2 {
+  margin: 0 0 10px;
+  font-size: 16px;
+}
+.sub {
+  margin: 0 0 16px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.product {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px;
+  background: rgba(255,255,255,0.02);
+}
+.product .title {
+  font-weight: 650;
+  margin-bottom: 6px;
+}
+.product .desc {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+.product .row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.price {
+  font-weight: 700;
+}
+.btn {
+  cursor: pointer;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-weight: 650;
+}
+.btn:hover { border-color: #3c4453; }
+.btn.primary {
+  border-color: rgba(106,169,255,0.55);
+  background: rgba(106,169,255,0.12);
+}
+.btn.primary:hover {
+  background: rgba(106,169,255,0.18);
+}
+
+.kpis {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+.kpi {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px;
+  background: rgba(255,255,255,0.02);
+}
+.kpi .label {
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+.kpi .value {
+  font-size: 16px;
+  font-weight: 750;
+}
+
+.footer {
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.hr {
+  height: 1px;
+  background: var(--line);
+  margin: 12px 0;
+}
+
+.notice {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 12px;
+  border: 1px dashed #3a4250;
+  border-radius: 14px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+.pill {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.03);
+  color: var(--text);
+}
+
+/* A/B UI 차이를 눈으로 확인하기 위한 스타일 */
+.variantA .primary { box-shadow: 0 0 0 rgba(0,0,0,0); }
+.variantB .primary { box-shadow: 0 0 0 3px rgba(106,169,255,0.15); }
+
+/* detail page layout tweak for B */
+.detail-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+.detail-hero .left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.detail-hero .name {
+  font-size: 18px;
+  font-weight: 800;
+}
+.detail-hero .meta {
+  color: var(--muted);
+  font-size: 13px;
+}
+.detail-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.detail-actions.stickyTop {
+  position: sticky;
+  top: 12px;
+  background: rgba(23,26,33,0.8);
+  padding: 10px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+}

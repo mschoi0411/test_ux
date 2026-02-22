@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AB Dashboard</title>
+  <link rel="stylesheet" href="/dashboard.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo"></div>
+      <div>
+        <div class="title">AB Dashboard</div>
+        <div class="subtitle">실험 관리 + A/B Metrics (MVP)</div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <a class="btn" href="/editor">Visual Editor</a>
+      <button class="btn" id="refreshBtn">새로고침</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <div class="cardHead">
+        <h2>Experiments</h2>
+        <div class="muted">site_id: <span class="mono">ab-sample</span></div>
+      </div>
+
+      <div class="tableWrap">
+        <table class="table" id="expTable">
+          <thead>
+            <tr>
+              <th>Key</th>
+              <th>Status</th>
+              <th>URL Prefix</th>
+              <th>Version</th>
+              <th>Updated</th>
+              <th style="width:280px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="expTbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card" id="metricsCard" style="display:none;">
+      <div class="cardHead">
+        <h2>Metrics</h2>
+        <div class="muted">선택된 실험: <span class="mono" id="metricKey">—</span></div>
+      </div>
+
+      <div class="grid">
+        <div class="miniCard">
+          <div class="miniTitle">CVR (Conversions / Sessions)</div>
+          <div class="miniRow"><div class="pill">A</div><div class="big mono" id="cvrA">—</div></div>
+          <div class="miniRow"><div class="pill b">B</div><div class="big mono" id="cvrB">—</div></div>
+        </div>
+
+        <div class="miniCard">
+          <div class="miniTitle">CTR (Clicks / PageViews)</div>
+          <div class="miniRow"><div class="pill">A</div><div class="big mono" id="ctrA">—</div></div>
+          <div class="miniRow"><div class="pill b">B</div><div class="big mono" id="ctrB">—</div></div>
+        </div>
+
+        <div class="miniCard">
+          <div class="miniTitle">Bounce Rate</div>
+          <div class="miniRow"><div class="pill">A</div><div class="big mono" id="brA">—</div></div>
+          <div class="miniRow"><div class="pill b">B</div><div class="big mono" id="brB">—</div></div>
+        </div>
+
+        <div class="miniCard">
+          <div class="miniTitle">Counts</div>
+          <div class="kv mono" id="countsBox">—</div>
+        </div>
+      </div>
+
+      <div class="split">
+        <div class="miniCard">
+          <div class="miniTitle">Top Clicked Elements (A)</div>
+          <div class="mono list" id="topA">—</div>
+        </div>
+        <div class="miniCard">
+          <div class="miniTitle">Top Clicked Elements (B)</div>
+          <div class="mono list" id="topB">—</div>
+        </div>
+      </div>
+
+      <div class="hint">
+        * MVP 집계: <span class="mono">data/events.jsonl</span> 전체를 읽어서 계산합니다. (데이터가 커지면 ClickHouse/BigQuery로 이동)
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="cardHead">
+        <h2>Quick Test</h2>
+        <div class="muted">SDK가 실제 적용되는지 바로 확인</div>
+      </div>
+      <div class="btnRow">
+        <a class="btn primary" href="/" target="_blank" rel="noopener">Open Main</a>
+        <a class="btn primary" href="/detail?product=neo-coffee" target="_blank" rel="noopener">Open Detail</a>
+        <a class="btn primary" href="/checkout?product=neo-coffee" target="_blank" rel="noopener">Open Checkout</a>
+      </div>
+      <div class="muted" style="margin-top:10px;">
+        방문할 때마다 유저가 A/B로 고정됩니다(anon_user_id 기반). 다른 유저처럼 보려면 시크릿 창 또는 localStorage 삭제.
+      </div>
+    </section>
+  </main>
+
+  <script src="/dashboard.js"></script>
+</body>
+</html>

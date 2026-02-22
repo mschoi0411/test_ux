@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Visual Editor (MVP+ Real)</title>
+  <link rel="stylesheet" href="/editor.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo"></div>
+      <div>
+        <div class="title">Visual Editor (MVP+ Real)</div>
+        <div class="subtitle">프리뷰(임시) vs Real 적용(서버 저장→SDK 실제 적용)</div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <label class="label">대상 URL</label>
+      <select id="targetSelect">
+        <option value="/">/ (main)</option>
+        <option value="/detail?product=neo-coffee">/detail</option>
+        <option value="/checkout?product=neo-coffee">/checkout</option>
+      </select>
+
+      <input id="expKey" type="text" placeholder="experiment key (예: exp_checkout_cta_v1)" style="width:260px" />
+      <input id="urlPrefix" type="text" placeholder="url prefix (예: /checkout)" style="width:200px" />
+
+      <button id="reloadBtn" class="btn">리로드</button>
+      <button id="togglePickBtn" class="btn primary" data-state="on">선택모드: ON</button>
+
+      <div class="seg">
+        <button id="variantABtn" class="btn segBtn active">Variant A</button>
+        <button id="variantBBtn" class="btn segBtn">Variant B</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel">
+      <h2>선택된 요소</h2>
+      <div class="card">
+        <div class="row"><div class="k">상태</div><div class="v" id="statusText">대기 중…</div></div>
+        <div class="row"><div class="k">Selector</div><div class="v mono" id="selectorText">—</div></div>
+        <div class="row"><div class="k">Tag</div><div class="v mono" id="tagText">—</div></div>
+        <div class="row"><div class="k">Track ID</div><div class="v mono" id="trackIdText">—</div></div>
+        <div class="row"><div class="k">Text</div><div class="v" id="textText">—</div></div>
+        <div class="row"><div class="k">Rect</div><div class="v mono" id="rectText">—</div></div>
+      </div>
+
+      <h2>변경 생성 (Variant B)</h2>
+      <div class="card">
+        <div class="formRow">
+          <label class="formLabel">Action</label>
+          <select id="actionType">
+            <option value="set_text">set_text (텍스트 변경)</option>
+            <option value="hide">hide (숨김)</option>
+            <option value="show">show (표시)</option>
+            <option value="add_class">add_class</option>
+            <option value="remove_class">remove_class</option>
+            <option value="set_attr">set_attr (속성 설정)</option>
+            <option value="inject_css">inject_css (CSS 주입)</option>
+          </select>
+        </div>
+
+        <div class="formRow" id="valueRow">
+          <label class="formLabel">Value</label>
+          <input id="actionValue" type="text" placeholder="예: ✅ 결제하고 끝내기 / primary" />
+        </div>
+
+        <div class="formRow" id="attrRow" style="display:none;">
+          <label class="formLabel">Attr</label>
+          <div class="attrGrid">
+            <input id="attrName" type="text" placeholder="name (예: href, aria-label)" />
+            <input id="attrValue" type="text" placeholder="value (예: /checkout)" />
+          </div>
+        </div>
+
+        <div class="formRow" id="cssRow" style="display:none;">
+          <label class="formLabel">CSS</label>
+          <textarea id="cssValue" rows="5" placeholder='예:
+[data-track-id="pay_btn"]{ font-size:18px; padding:14px; }'></textarea>
+        </div>
+
+        <div class="btnRow">
+          <button id="addChangeBtn" class="btn primary">변경 추가</button>
+
+          <button id="applyNowBtn" class="btn">프리뷰 적용(B)</button>
+
+          <!-- ✅ Real 적용 버튼 -->
+          <button id="realApplyBtn" class="btn primary">Real 적용(서버 저장)</button>
+
+          <button id="openRealBtn" class="btn">Real 페이지 열기</button>
+          <button id="clearChangesBtn" class="btn danger">모두 삭제</button>
+        </div>
+
+        <div class="hint">
+          - <b>프리뷰 적용</b>: iframe에서만 임시로 보임(저장 안 됨)<br/>
+          - <b>Real 적용</b>: 서버에 저장/배포 → 실제 방문 시 SDK가 자동 A/B 실행
+        </div>
+      </div>
+
+      <h2>Variant B 변경 리스트</h2>
+      <div class="card">
+        <div id="changesList" class="changes"></div>
+        <div class="btnRow">
+          <button id="exportJsonBtn" class="btn">JSON Export</button>
+          <button id="copyJsonBtn" class="btn">복사</button>
+        </div>
+        <textarea id="jsonBox" class="mono" rows="8" spellcheck="false"></textarea>
+      </div>
+
+      <div class="card">
+        <h3>디버그</h3>
+        <div class="mono log" id="logBox"></div>
+      </div>
+    </section>
+
+    <section class="stage">
+      <div class="stageHeader">
+        <div class="stageTitle">Preview</div>
+        <div class="stageMeta">프리뷰는 editor-overlay가 적용/원복을 담당합니다.</div>
+      </div>
+
+      <div class="iframeWrap">
+        <iframe id="previewFrame" src="/" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <script src="/editor.js"></script>
+</body>
+</html>
