@@ -1,0 +1,7 @@
+{
+  "s_friction": "ux_friction_dropper",
+  "s_checkout_abandon": "checkout_abandoner",
+  "s_price_sensitive": "price_sensitive_dropper",
+  "s_over_explorer": "over_explorer",
+  "s_window_shopper": "window_shopper"
+}

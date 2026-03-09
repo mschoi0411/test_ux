@@ -1,0 +1,25 @@
+{"site_id":"ab-sample","anon_user_id":"u_f","session_id":"s_friction","ts":1700000000000,"event_name":"page_view","path":"/checkout","props":{"title":"Checkout"}}
+{"site_id":"ab-sample","anon_user_id":"u_f","session_id":"s_friction","ts":1700000001000,"event_name":"click","path":"/checkout","props":{"element_id":"pay_btn"}}
+{"site_id":"ab-sample","anon_user_id":"u_f","session_id":"s_friction","ts":1700000001500,"event_name":"error","path":"/checkout","props":{"message":"payment api timeout","code":"E_TIMEOUT"}}
+{"site_id":"ab-sample","anon_user_id":"u_f","session_id":"s_friction","ts":1700000004000,"event_name":"dwell_time","path":"/checkout","props":{"dwell_ms":4000,"reason":"pagehide"}}
+
+{"site_id":"ab-sample","anon_user_id":"u_c","session_id":"s_checkout_abandon","ts":1700000100000,"event_name":"page_view","path":"/checkout","props":{"title":"Checkout"}}
+{"site_id":"ab-sample","anon_user_id":"u_c","session_id":"s_checkout_abandon","ts":1700000102000,"event_name":"click","path":"/checkout","props":{"element_id":"pay_btn"}}
+{"site_id":"ab-sample","anon_user_id":"u_c","session_id":"s_checkout_abandon","ts":1700000165000,"event_name":"dwell_time","path":"/checkout","props":{"dwell_ms":65000,"reason":"beforeunload"}}
+
+{"site_id":"ab-sample","anon_user_id":"u_p","session_id":"s_price_sensitive","ts":1700000200000,"event_name":"page_view","path":"/detail","props":{"title":"Detail"}}
+{"site_id":"ab-sample","anon_user_id":"u_p","session_id":"s_price_sensitive","ts":1700000203000,"event_name":"click","path":"/detail","props":{"element_id":"price_toggle"}}
+{"site_id":"ab-sample","anon_user_id":"u_p","session_id":"s_price_sensitive","ts":1700000207000,"event_name":"click","path":"/detail","props":{"element_id":"coupon_open"}}
+{"site_id":"ab-sample","anon_user_id":"u_p","session_id":"s_price_sensitive","ts":1700000220000,"event_name":"dwell_time","path":"/detail","props":{"dwell_ms":20000,"reason":"pagehide"}}
+
+{"site_id":"ab-sample","anon_user_id":"u_o","session_id":"s_over_explorer","ts":1700000300000,"event_name":"page_view","path":"/","props":{"title":"Home"}}
+{"site_id":"ab-sample","anon_user_id":"u_o","session_id":"s_over_explorer","ts":1700000310000,"event_name":"page_view","path":"/category","props":{"title":"Category"}}
+{"site_id":"ab-sample","anon_user_id":"u_o","session_id":"s_over_explorer","ts":1700000320000,"event_name":"page_view","path":"/search","props":{"title":"Search"}}
+{"site_id":"ab-sample","anon_user_id":"u_o","session_id":"s_over_explorer","ts":1700000330000,"event_name":"page_view","path":"/detail","props":{"title":"Detail"}}
+{"site_id":"ab-sample","anon_user_id":"u_o","session_id":"s_over_explorer","ts":1700000360000,"event_name":"page_view","path":"/category","props":{"title":"Category"}}
+{"site_id":"ab-sample","anon_user_id":"u_o","session_id":"s_over_explorer","ts":1700000420000,"event_name":"page_view","path":"/detail","props":{"title":"Detail"}}
+{"site_id":"ab-sample","anon_user_id":"u_o","session_id":"s_over_explorer","ts":1700000422000,"event_name":"dwell_time","path":"/detail","props":{"dwell_ms":122000,"reason":"pagehide"}}
+
+{"site_id":"ab-sample","anon_user_id":"u_w","session_id":"s_window_shopper","ts":1700000500000,"event_name":"page_view","path":"/","props":{"title":"Home"}}
+{"site_id":"ab-sample","anon_user_id":"u_w","session_id":"s_window_shopper","ts":1700000502000,"event_name":"click","path":"/","props":{"element_id":"open_detail_neo"}}
+{"site_id":"ab-sample","anon_user_id":"u_w","session_id":"s_window_shopper","ts":1700000510000,"event_name":"dwell_time","path":"/","props":{"dwell_ms":10000,"reason":"pagehide"}}

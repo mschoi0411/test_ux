@@ -4,6 +4,13 @@ const path = require("path");
 const fs = require("fs");
 const crypto = require("crypto");
 
+const {
+  computeLabeledSessionSummaries,
+  computeLabelsSummary,
+  buildInsightsInput
+} = require("./analytics/pipeline");
+const { generateDummyInsights } = require("./insights/dummyGenerator");
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -37,6 +44,16 @@ function now() { return Date.now(); }
 function rid() { return crypto.randomBytes(8).toString("hex"); }
 function safeParseJsonLine(line) {
   try { return JSON.parse(line); } catch { return null; }
+}
+
+function toNum(x) {
+  const n = Number(x);
+  return Number.isFinite(n) ? n : null;
+}
+
+function toInt(x) {
+  const n = Math.trunc(Number(x));
+  return Number.isFinite(n) ? n : null;
 }
 
 // ---------- collect endpoint ----------
@@ -311,9 +328,90 @@ app.get("/api/metrics", (req, res) => {
   return res.json(out);
 });
 
+// ---------- Sessions / Labels / Insights (UX-Stream v1) ----------
+// NOTE: 현재는 JSONL 기반 MVP. (대용량에서는 range query/DB/streaming 권장)
+
+app.get("/api/sessions", async (req, res) => {
+  const site_id = String(req.query.site_id || "ab-sample");
+  const from_ts = toNum(req.query.from_ts);
+  const to_ts = toNum(req.query.to_ts);
+  const limit_sessions = Math.max(1, Math.min(200, toInt(req.query.limit) ?? 50));
+  const limit_events = Math.max(100, Math.min(200_000, toInt(req.query.limit_events) ?? 50_000));
+
+  try {
+    const labeled = await computeLabeledSessionSummaries(EVENTS_FILE, {
+      site_id,
+      from_ts,
+      to_ts,
+      limit_events,
+      session_ttl_ms: 30 * 60 * 1000
+    });
+
+    const sessions = labeled
+      .slice(0, limit_sessions)
+      .map((x) => ({
+        summary: x.summary,
+        label: x.label
+      }));
+
+    return res.json({ ok: true, site_id, from_ts, to_ts, sessions });
+  } catch (e) {
+    return res.status(500).json({ ok: false, reason: String(e) });
+  }
+});
+
+app.get("/api/labels/summary", async (req, res) => {
+  const site_id = String(req.query.site_id || "ab-sample");
+  const from_ts = toNum(req.query.from_ts);
+  const to_ts = toNum(req.query.to_ts);
+  const limit_events = Math.max(100, Math.min(200_000, toInt(req.query.limit_events) ?? 100_000));
+
+  try {
+    const labeled = await computeLabeledSessionSummaries(EVENTS_FILE, {
+      site_id,
+      from_ts,
+      to_ts,
+      limit_events,
+      session_ttl_ms: 30 * 60 * 1000
+    });
+
+    const summary = computeLabelsSummary(labeled);
+    return res.json({ ok: true, site_id, from_ts, to_ts, summary });
+  } catch (e) {
+    return res.status(500).json({ ok: false, reason: String(e) });
+  }
+});
+
+app.get("/api/insights", async (req, res) => {
+  const site_id = String(req.query.site_id || "ab-sample");
+  const from_ts = toNum(req.query.from_ts);
+  const to_ts = toNum(req.query.to_ts);
+  const limit_events = Math.max(100, Math.min(200_000, toInt(req.query.limit_events) ?? 150_000));
+  const reps = Math.max(1, Math.min(5, toInt(req.query.reps) ?? 3));
+
+  try {
+    const labeled = await computeLabeledSessionSummaries(EVENTS_FILE, {
+      site_id,
+      from_ts,
+      to_ts,
+      limit_events,
+      session_ttl_ms: 30 * 60 * 1000
+    });
+
+    const input = buildInsightsInput(site_id, labeled, { perLabelRepresentatives: reps });
+    const output = generateDummyInsights(input);
+    return res.json({ ok: true, input, output });
+  } catch (e) {
+    return res.status(500).json({ ok: false, reason: String(e) });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`✅ AB Sample running: http://localhost:${PORT}`);
   console.log(`📦 collecting events to: ${EVENTS_FILE}`);
   console.log(`🧪 experiments file: ${EXP_FILE}`);
   console.log(`📊 dashboard: http://localhost:${PORT}/dashboard`);
+  console.log(`🧩 sessions api: http://localhost:${PORT}/api/sessions`);
+  console.log(`🏷️  labels summary: http://localhost:${PORT}/api/labels/summary`);
+  console.log(`💡 insights (dummy): http://localhost:${PORT}/api/insights`);
 });
