@@ -1,0 +1,35 @@
+{
+  "experiments": [
+    {
+      "id": "e4e60540a7d0f437",
+      "site_id": "ab-sample",
+      "key": "exp_main_cta_v1",
+      "url_prefix": "/",
+      "traffic": {
+        "A": 50,
+        "B": 50
+      },
+      "goals": [
+        "checkout_complete"
+      ],
+      "variants": {
+        "A": [],
+        "B": [
+          {
+            "selector": "[data-track-id=\"open_detail_luna\"]",
+            "actions": [
+              {
+                "type": "set_text",
+                "value": "상세보기"
+              }
+            ]
+          }
+        ]
+      },
+      "status": "running",
+      "updated_at": 1773039061133,
+      "published_at": 1773039061133,
+      "version": 1
+    }
+  ]
+}
