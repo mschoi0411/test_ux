@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "defaults": {
+    "app_id": "ux-stream-sim",
+    "site_id": "ab-sample",
+    "base_url": "http://localhost:3000/",
+    "lang": "ko-KR",
+    "screen": { "w": 1920, "h": 1080 },
+    "viewport": { "w": 1200, "h": 800 }
+  },
+  "personas": [
+    {
+      "id": "over_explorer",
+      "weight": 0.22,
+      "description": "Many browse/detail hops without entering checkout.",
+      "timeline": [
+        { "after_ms": 0, "event_name": "page_view", "path": "/", "props": { "title": "Home" } },
+        { "after_ms": 15000, "event_name": "page_view", "path": "/category", "props": { "title": "Category" } },
+        { "after_ms": 15000, "event_name": "page_view", "path": "/search", "props": { "title": "Search" } },
+        { "after_ms": 15000, "event_name": "page_view", "path": "/detail", "props": { "title": "Detail" } },
+        { "after_ms": 15000, "event_name": "page_view", "path": "/category", "props": { "title": "Category" } },
+        { "after_ms": 15000, "event_name": "page_view", "path": "/detail", "props": { "title": "Detail" } },
+        { "after_ms": 45000, "event_name": "dwell_time", "path": "/detail", "props": { "dwell_ms": 120000, "reason": "pagehide" } }
+      ]
+    },
+    {
+      "id": "price_sensitive_dropper",
+      "weight": 0.2,
+      "description": "Focuses on discount and shipping cost details, then leaves.",
+      "timeline": [
+        { "after_ms": 0, "event_name": "page_view", "path": "/detail", "props": { "title": "Detail" } },
+        { "after_ms": 1200, "event_name": "click", "path": "/detail", "props": { "element_id": "price_toggle" } },
+        { "after_ms": 1000, "event_name": "click", "path": "/detail", "props": { "element_id": "coupon_open" } },
+        { "after_ms": 2000, "event_name": "click", "path": "/detail", "props": { "element_id": "shipping_fee_info" } },
+        { "after_ms": 15800, "event_name": "dwell_time", "path": "/detail", "props": { "dwell_ms": 20000, "reason": "pagehide" } }
+      ]
+    },
+    {
+      "id": "window_shopper",
+      "weight": 0.3,
+      "description": "Short visit with minimal interaction before leaving.",
+      "timeline": [
+        { "after_ms": 0, "event_name": "page_view", "path": "/", "props": { "title": "Home" } },
+        { "after_ms": 2000, "event_name": "click", "path": "/", "props": { "element_id": "open_detail_neo" }, "probability": 0.5 },
+        { "after_ms": 8000, "event_name": "dwell_time", "path": "/", "props": { "dwell_ms": 10000, "reason": "pagehide" } }
+      ]
+    },
+    {
+      "id": "ux_friction_dropper",
+      "weight": 0.14,
+      "description": "Enters checkout but experiences friction or errors.",
+      "timeline": [
+        { "after_ms": 0, "event_name": "page_view", "path": "/checkout", "props": { "title": "Checkout" } },
+        { "after_ms": 800, "event_name": "click", "path": "/checkout", "props": { "element_id": "pay_btn" } },
+        { "after_ms": 400, "event_name": "error", "path": "/checkout", "props": { "message": "payment failed", "code": "E_SIM" } },
+        { "after_ms": 3800, "event_name": "dwell_time", "path": "/checkout", "props": { "dwell_ms": 5000, "reason": "pagehide" } }
+      ]
+    },
+    {
+      "id": "checkout_abandoner",
+      "weight": 0.14,
+      "description": "Starts checkout, hesitates, and abandons before completion.",
+      "timeline": [
+        { "after_ms": 0, "event_name": "page_view", "path": "/checkout", "props": { "title": "Checkout" } },
+        { "after_ms": 1500, "event_name": "click", "path": "/checkout", "props": { "element_id": "pay_btn" } },
+        { "after_ms": 63500, "event_name": "dwell_time", "path": "/checkout", "props": { "dwell_ms": 65000, "reason": "beforeunload" } }
+      ]
+    }
+  ]
+}

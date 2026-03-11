@@ -95,3 +95,35 @@ tr:hover td{background:rgba(255,255,255,0.02);}
 .list{white-space:pre-wrap; line-height:1.45; color:#dbe7ff;}
 .btnRow{display:flex; gap:10px; flex-wrap:wrap;}
 .hint{color:var(--muted); font-size:12px; margin-top:10px;}
+.analysisGrid{margin-bottom:10px;}
+.analysisSplit{align-items:start;}
+.barList{display:flex; flex-direction:column; gap:10px;}
+.barRow{display:flex; flex-direction:column; gap:6px;}
+.barMeta{display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:12px;}
+.barTrack{width:100%; height:10px; border-radius:999px; overflow:hidden; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.04);}
+.barFill{height:100%; border-radius:999px; background:linear-gradient(90deg,var(--accent),#9a6aff);}
+.opportunityList{display:flex; flex-direction:column; gap:10px;}
+.opportunityItem{border:1px solid var(--line); border-radius:12px; padding:10px; background:rgba(255,255,255,0.02);}
+.opportunityTitle{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:6px;}
+.insightsGrid{display:grid; grid-template-columns:repeat(2,1fr); gap:10px;}
+.insightCard{border:1px solid var(--line); border-radius:14px; padding:14px; background:rgba(255,255,255,0.03);}
+.insightHead{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:10px;}
+.insightTitle{font-weight:900;}
+.insightText{color:#dbe7ff; line-height:1.5; font-size:13px;}
+.tagRow{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;}
+.badge.high{border-color:rgba(255,93,93,0.55); background:rgba(255,93,93,0.12);}
+.badge.medium{border-color:rgba(255,201,71,0.55); background:rgba(255,201,71,0.12);}
+.badge.low{border-color:rgba(106,169,255,0.55); background:rgba(106,169,255,0.12);}
+.badge.label{border-color:rgba(106,169,255,0.4); background:rgba(106,169,255,0.08);}
+.compactList{margin:8px 0 0; padding-left:18px; color:#dbe7ff; line-height:1.5; font-size:13px;}
+.compactList li+li{margin-top:4px;}
+
+@media (max-width: 920px){
+  .grid{grid-template-columns:repeat(2, 1fr);}
+  .insightsGrid{grid-template-columns:1fr;}
+}
+
+@media (max-width: 640px){
+  .grid{grid-template-columns:1fr;}
+  .split{grid-template-columns:1fr;}
+}

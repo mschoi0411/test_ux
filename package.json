@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node server.js",
     "test": "node --test",
-    "simulate": "node scripts/simulate.js"
+    "simulate": "node scripts/simulate.js",
+    "load:k6": "k6 run load/persona-load.js"
   },
   "dependencies": {
     "express": "^4.19.2"

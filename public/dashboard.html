@@ -12,7 +12,7 @@
       <div class="logo"></div>
       <div>
         <div class="title">AB Dashboard</div>
-        <div class="subtitle">실험 관리 + A/B Metrics (MVP)</div>
+        <div class="subtitle">실험 관리 + A/B Metrics + UX Analysis</div>
       </div>
     </div>
 
@@ -90,6 +90,107 @@
 
       <div class="hint">
         * MVP 집계: <span class="mono">data/events.jsonl</span> 전체를 읽어서 계산합니다. (데이터가 커지면 ClickHouse/BigQuery로 이동)
+      </div>
+    </section>
+
+    <section class="card" id="uxSummaryCard">
+      <div class="cardHead">
+        <h2>UX Analysis Overview</h2>
+        <div class="muted">세션 라벨 분포와 인사이트를 한 번에 확인</div>
+      </div>
+
+      <div class="grid analysisGrid">
+        <div class="miniCard">
+          <div class="miniTitle">Total Sessions</div>
+          <div class="big mono" id="uxTotalSessions">—</div>
+        </div>
+        <div class="miniCard">
+          <div class="miniTitle">Primary Label</div>
+          <div class="big" id="uxTopLabel">—</div>
+        </div>
+        <div class="miniCard">
+          <div class="miniTitle">High Priority Insights</div>
+          <div class="big mono" id="uxHighPriorityCount">—</div>
+        </div>
+        <div class="miniCard">
+          <div class="miniTitle">Insight Provider</div>
+          <div class="big mono" id="uxInsightProvider">—</div>
+        </div>
+      </div>
+
+      <div class="split analysisSplit">
+        <div class="miniCard">
+          <div class="miniTitle">Label Distribution</div>
+          <div id="labelBars" class="barList muted">loading…</div>
+        </div>
+        <div class="miniCard">
+          <div class="miniTitle">Top Opportunities</div>
+          <div id="opportunityList" class="opportunityList muted">loading…</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="labelsCard">
+      <div class="cardHead">
+        <h2>Label Summary</h2>
+        <div class="muted">유형별 세션 수, 비중, 평균 행동 지표</div>
+      </div>
+
+      <div class="tableWrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Label</th>
+              <th>Sessions</th>
+              <th>Share</th>
+              <th>Avg Duration</th>
+              <th>Avg Depth</th>
+              <th>Checkout Complete Rate</th>
+            </tr>
+          </thead>
+          <tbody id="labelSummaryBody">
+            <tr><td colspan="6" class="muted">loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card" id="sessionsCard">
+      <div class="cardHead">
+        <h2>Recent Sessions</h2>
+        <div class="muted">최근 세션의 라벨과 퍼널 진행 상태</div>
+      </div>
+
+      <div class="tableWrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Session</th>
+              <th>Label</th>
+              <th>Confidence</th>
+              <th>Duration</th>
+              <th>Page Views</th>
+              <th>Clicks</th>
+              <th>Depth</th>
+              <th>Max Step</th>
+              <th>Checkout</th>
+            </tr>
+          </thead>
+          <tbody id="sessionsBody">
+            <tr><td colspan="9" class="muted">loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card" id="insightsCard">
+      <div class="cardHead">
+        <h2>UX Insights</h2>
+        <div class="muted">라벨별 원인 가설, 검증 방법, 추천 실험</div>
+      </div>
+
+      <div id="insightsList" class="insightsGrid">
+        <div class="miniCard muted">loading…</div>
       </div>
     </section>
 
