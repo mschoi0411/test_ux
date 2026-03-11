@@ -26,6 +26,7 @@
   const labelSummaryBody = document.getElementById("labelSummaryBody");
   const sessionsBody = document.getElementById("sessionsBody");
   const insightsList = document.getElementById("insightsList");
+  const helpButtons = Array.from(document.querySelectorAll(".helpBtn"));
 
   function fmtPct(x) {
     if (typeof x !== "number" || !isFinite(x)) return "—";
@@ -52,6 +53,25 @@
       .replace(/>/g, "&gt;")
       .replace(/\"/g, "&quot;")
       .replace(/'/g, "&#39;");
+  }
+  function closeHelpPopovers() {
+    helpButtons.forEach((button) => {
+      button.setAttribute("aria-expanded", "false");
+      const popover = document.getElementById(button.dataset.helpTarget || "");
+      if (popover) popover.classList.remove("is-open");
+    });
+  }
+  function toggleHelpPopover(button) {
+    const targetId = button?.dataset.helpTarget || "";
+    const popover = document.getElementById(targetId);
+    if (!popover) return;
+
+    const willOpen = !popover.classList.contains("is-open");
+    closeHelpPopovers();
+    if (willOpen) {
+      popover.classList.add("is-open");
+      button.setAttribute("aria-expanded", "true");
+    }
   }
 
   async function fetchExperiments() {
@@ -347,6 +367,22 @@ events=${m.totals.events}  goals=${(m.goals||[]).join(", ")}`;
     } catch (err) {
       alert(String(err));
     }
+  });
+
+  helpButtons.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.stopPropagation();
+      toggleHelpPopover(button);
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    if (event.target.closest(".helpAnchor")) return;
+    closeHelpPopovers();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeHelpPopovers();
   });
 
   refreshBtn.addEventListener("click", () => render());
