@@ -14,8 +14,9 @@
 - `public/dashboard.*`: 실험 관리 + A/B metrics 대시보드(MVP)
 - `public/editor.*`: Visual Editor(MVP+ Real 적용)
 - `analytics/*`: 원시 이벤트 -> 세션화 -> 요약 -> 규칙 라벨링 파이프라인
-- `insights/*`: 인사이트 I/O 계약 + 더미 생성기(LLM 플러그인 자리)
+- `insights/*`: 인사이트 I/O 계약 + provider 추상화 + fallback 생성기
 - `docs/*`: 라벨 규칙, LLM 인사이트 I/O 스펙
+- `personas/*`, `load/*`: persona 정의 + `k6` 부하 테스트 시나리오
 - `eval/*`, `test/*`: 최소 평가셋/단위 테스트
 
 ## 실행 방법
@@ -48,3 +49,39 @@ npm test
 
 - 픽스처 이벤트: `eval/sample-events.jsonl`
 - 기대 라벨: `eval/expected-labels.json`
+
+## Persona 시뮬레이션 / k6 부하 테스트
+
+기존 Node 시뮬레이터:
+
+```bash
+npm run simulate -- --users 100 --sessions 2
+```
+
+`k6` 기반 persona 부하 테스트:
+
+```bash
+npm run load:k6
+```
+
+- 공용 persona 정의: `personas/catalog.json`
+- `k6` 시나리오: `load/persona-load.js`
+- 상세 가이드: `docs/load-testing.md`
+
+## LLM UX 인사이트 파이프라인
+
+`GET /api/insights`는 이제 입력 계약 생성 후 provider 추상화 계층을 통해 인사이트를 만듭니다.
+
+- 기본값: deterministic fallback generator
+- `UX_INSIGHTS_PROVIDER=openai` 설정 시 OpenAI 호환 Chat Completions API 호출
+- 관련 env
+  - `UX_INSIGHTS_PROVIDER`
+  - `UX_INSIGHTS_API_KEY`
+  - `UX_INSIGHTS_BASE_URL`
+  - `UX_INSIGHTS_MODEL`
+
+예시:
+
+```bash
+curl "http://localhost:3000/api/insights?site_id=ab-sample&reps=3"
+```

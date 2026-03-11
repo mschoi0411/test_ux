@@ -9,7 +9,7 @@ const {
   computeLabelsSummary,
   buildInsightsInput
 } = require("./analytics/pipeline");
-const { generateDummyInsights } = require("./insights/dummyGenerator");
+const { generateInsights } = require("./insights/generator");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -388,6 +388,9 @@ app.get("/api/insights", async (req, res) => {
   const to_ts = toNum(req.query.to_ts);
   const limit_events = Math.max(100, Math.min(200_000, toInt(req.query.limit_events) ?? 150_000));
   const reps = Math.max(1, Math.min(5, toInt(req.query.reps) ?? 3));
+  const provider = typeof req.query.provider === "string" ? req.query.provider : undefined;
+  const model = typeof req.query.model === "string" ? req.query.model : undefined;
+  const include_prompt = String(req.query.include_prompt || "") === "1";
 
   try {
     const labeled = await computeLabeledSessionSummaries(EVENTS_FILE, {
@@ -399,8 +402,16 @@ app.get("/api/insights", async (req, res) => {
     });
 
     const input = buildInsightsInput(site_id, labeled, { perLabelRepresentatives: reps });
-    const output = generateDummyInsights(input);
-    return res.json({ ok: true, input, output });
+    const result = await generateInsights(input, { provider, model });
+    return res.json({
+      ok: true,
+      provider: result.provider,
+      model: result.model,
+      fallback_reason: result.fallbackReason || null,
+      input,
+      output: result.output,
+      prompt: include_prompt ? result.prompt : undefined
+    });
   } catch (e) {
     return res.status(500).json({ ok: false, reason: String(e) });
   }
@@ -413,5 +424,5 @@ app.listen(PORT, () => {
   console.log(`📊 dashboard: http://localhost:${PORT}/dashboard`);
   console.log(`🧩 sessions api: http://localhost:${PORT}/api/sessions`);
   console.log(`🏷️  labels summary: http://localhost:${PORT}/api/labels/summary`);
-  console.log(`💡 insights (dummy): http://localhost:${PORT}/api/insights`);
+  console.log(`💡 insights: http://localhost:${PORT}/api/insights`);
 });

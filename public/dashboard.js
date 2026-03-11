@@ -1,5 +1,6 @@
 // public/dashboard.js
 (function () {
+  const SITE_ID = "ab-sample";
   const expTbody = document.getElementById("expTbody");
   const refreshBtn = document.getElementById("refreshBtn");
 
@@ -16,6 +17,16 @@
   const topA = document.getElementById("topA");
   const topB = document.getElementById("topB");
 
+  const uxTotalSessions = document.getElementById("uxTotalSessions");
+  const uxTopLabel = document.getElementById("uxTopLabel");
+  const uxHighPriorityCount = document.getElementById("uxHighPriorityCount");
+  const uxInsightProvider = document.getElementById("uxInsightProvider");
+  const labelBars = document.getElementById("labelBars");
+  const opportunityList = document.getElementById("opportunityList");
+  const labelSummaryBody = document.getElementById("labelSummaryBody");
+  const sessionsBody = document.getElementById("sessionsBody");
+  const insightsList = document.getElementById("insightsList");
+
   function fmtPct(x) {
     if (typeof x !== "number" || !isFinite(x)) return "—";
     return (x * 100).toFixed(2) + "%";
@@ -25,9 +36,26 @@
     const d = new Date(ts);
     return d.toLocaleString();
   }
+  function fmtInt(x) {
+    if (typeof x !== "number" || !isFinite(x)) return "—";
+    return Math.round(x).toLocaleString();
+  }
+  function fmtDuration(ms) {
+    if (typeof ms !== "number" || !isFinite(ms)) return "—";
+    if (ms < 1000) return `${Math.round(ms)}ms`;
+    return `${(ms / 1000).toFixed(1)}s`;
+  }
+  function escapeHtml(value) {
+    return String(value == null ? "" : value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/\"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
 
   async function fetchExperiments() {
-    const r = await fetch("/api/experiments?site_id=ab-sample");
+    const r = await fetch(`/api/experiments?site_id=${encodeURIComponent(SITE_ID)}`);
     const j = await r.json();
     if (!j?.ok) throw new Error("experiments fetch failed");
     return j.experiments || [];
@@ -51,15 +79,169 @@
   }
 
   async function fetchMetrics(key) {
-    const r = await fetch(`/api/metrics?site_id=ab-sample&key=${encodeURIComponent(key)}`);
+    const r = await fetch(`/api/metrics?site_id=${encodeURIComponent(SITE_ID)}&key=${encodeURIComponent(key)}`);
     const j = await r.json();
     if (!j?.ok) throw new Error(j?.reason || "metrics failed");
+    return j;
+  }
+  async function fetchSessions() {
+    const r = await fetch(`/api/sessions?site_id=${encodeURIComponent(SITE_ID)}&limit=12`);
+    const j = await r.json();
+    if (!j?.ok) throw new Error(j?.reason || "sessions failed");
+    return j.sessions || [];
+  }
+  async function fetchLabelsSummary() {
+    const r = await fetch(`/api/labels/summary?site_id=${encodeURIComponent(SITE_ID)}`);
+    const j = await r.json();
+    if (!j?.ok) throw new Error(j?.reason || "labels summary failed");
+    return j.summary || [];
+  }
+  async function fetchInsights() {
+    const r = await fetch(`/api/insights?site_id=${encodeURIComponent(SITE_ID)}&reps=3`);
+    const j = await r.json();
+    if (!j?.ok) throw new Error(j?.reason || "insights failed");
     return j;
   }
 
   function renderTop(list) {
     if (!Array.isArray(list) || list.length === 0) return "—";
     return list.map((x) => `${String(x.element_id).padEnd(18)}  ${x.count}`).join("\n");
+  }
+  function labelName(label) {
+    const map = {
+      ux_friction_dropper: "UX Friction",
+      checkout_abandoner: "Checkout Abandoner",
+      price_sensitive_dropper: "Price Sensitive",
+      over_explorer: "Over Explorer",
+      window_shopper: "Window Shopper"
+    };
+    return map[label] || label || "unknown";
+  }
+  function renderLabelBars(summary) {
+    if (!Array.isArray(summary) || summary.length === 0) {
+      labelBars.innerHTML = '<div class="muted">라벨 데이터가 없습니다.</div>';
+      return;
+    }
+
+    labelBars.innerHTML = summary.map((item) => {
+      const share = typeof item.share === "number" ? item.share : 0;
+      const pct = Math.max(0, Math.min(100, share * 100));
+      return `
+        <div class="barRow">
+          <div class="barMeta">
+            <span>${escapeHtml(labelName(item.label))}</span>
+            <span class="mono">${fmtInt(item.sessions)} / ${fmtPct(share)}</span>
+          </div>
+          <div class="barTrack"><div class="barFill" style="width:${pct.toFixed(2)}%"></div></div>
+        </div>
+      `;
+    }).join("");
+  }
+  function renderOpportunities(insights) {
+    if (!Array.isArray(insights) || insights.length === 0) {
+      opportunityList.innerHTML = '<div class="muted">인사이트가 없습니다.</div>';
+      return;
+    }
+
+    opportunityList.innerHTML = insights.slice(0, 3).map((insight) => `
+      <div class="opportunityItem">
+        <div class="opportunityTitle">
+          <strong>${escapeHtml(labelName(insight.label))}</strong>
+          <span class="badge ${escapeHtml(insight.priority || "low")}">${escapeHtml(insight.priority || "low")}</span>
+        </div>
+        <div class="insightText">${escapeHtml(insight.where || "")}</div>
+      </div>
+    `).join("");
+  }
+  function renderLabelSummary(summary) {
+    if (!Array.isArray(summary) || summary.length === 0) {
+      labelSummaryBody.innerHTML = '<tr><td colspan="6" class="muted">라벨 요약 데이터가 없습니다.</td></tr>';
+      return;
+    }
+
+    labelSummaryBody.innerHTML = summary.map((item) => `
+      <tr>
+        <td><span class="badge label">${escapeHtml(labelName(item.label))}</span></td>
+        <td class="mono">${fmtInt(item.sessions)}</td>
+        <td class="mono">${fmtPct(item.share)}</td>
+        <td class="mono">${fmtDuration(item.metrics?.avg_duration_ms)}</td>
+        <td class="mono">${typeof item.metrics?.avg_depth === "number" ? item.metrics.avg_depth.toFixed(1) : "—"}</td>
+        <td class="mono">${fmtPct(item.metrics?.checkout_complete_rate)}</td>
+      </tr>
+    `).join("");
+  }
+  function renderSessions(sessions) {
+    if (!Array.isArray(sessions) || sessions.length === 0) {
+      sessionsBody.innerHTML = '<tr><td colspan="9" class="muted">세션 데이터가 없습니다.</td></tr>';
+      return;
+    }
+
+    sessionsBody.innerHTML = sessions.map((entry) => {
+      const summary = entry.summary || {};
+      const label = entry.label || {};
+      return `
+        <tr>
+          <td class="mono">${escapeHtml(summary.session_id || "—")}</td>
+          <td><span class="badge label">${escapeHtml(labelName(label.label))}</span></td>
+          <td class="mono">${fmtPct(label.confidence)}</td>
+          <td class="mono">${fmtDuration(summary.duration_ms)}</td>
+          <td class="mono">${fmtInt(summary.page_views)}</td>
+          <td class="mono">${fmtInt(summary.clicks)}</td>
+          <td class="mono">${fmtInt(summary.depth)}</td>
+          <td class="mono">${escapeHtml(summary.max_step || "—")}</td>
+          <td class="mono">${summary.checkout_complete ? "complete" : (summary.checkout_entered ? "entered" : "no")}</td>
+        </tr>
+      `;
+    }).join("");
+  }
+  function renderInsights(data) {
+    const insights = Array.isArray(data?.output?.insights) ? data.output.insights : [];
+    uxInsightProvider.textContent = data?.provider || "—";
+    uxHighPriorityCount.textContent = String(insights.filter((item) => item.priority === "high").length);
+
+    if (insights.length === 0) {
+      insightsList.innerHTML = '<div class="miniCard muted">인사이트가 없습니다.</div>';
+      return;
+    }
+
+    insightsList.innerHTML = insights.map((insight) => {
+      const experiments = Array.isArray(insight.recommended_experiments) ? insight.recommended_experiments : [];
+      const causes = Array.isArray(insight.possible_causes) ? insight.possible_causes : [];
+      const validations = Array.isArray(insight.validation_methods) ? insight.validation_methods : [];
+      return `
+        <article class="insightCard">
+          <div class="insightHead">
+            <div>
+              <div class="insightTitle">${escapeHtml(labelName(insight.label))}</div>
+              <div class="muted">${escapeHtml(insight.where || "")}</div>
+            </div>
+            <span class="badge ${escapeHtml(insight.priority || "low")}">${escapeHtml(insight.priority || "low")}</span>
+          </div>
+
+          <div class="insightText"><strong>Possible causes</strong></div>
+          <ul class="compactList">${causes.map((item) => `<li>${escapeHtml(item)}</li>`).join("") || "<li>—</li>"}</ul>
+
+          <div class="insightText"><strong>Validation methods</strong></div>
+          <ul class="compactList">${validations.map((item) => `<li>${escapeHtml(item)}</li>`).join("") || "<li>—</li>"}</ul>
+
+          <div class="insightText"><strong>Recommended experiments</strong></div>
+          <ul class="compactList">${experiments.map((item) => `<li>${escapeHtml(item.hypothesis || "")} - ${escapeHtml(item.change || "")} (${escapeHtml(item.primary_metric || "")})</li>`).join("") || "<li>—</li>"}</ul>
+        </article>
+      `;
+    }).join("");
+
+    renderOpportunities(insights);
+  }
+  function renderUxOverview(summary, insightData) {
+    const totalSessions = Array.isArray(summary)
+      ? summary.reduce((sum, item) => sum + (Number(item.sessions) || 0), 0)
+      : 0;
+    const top = Array.isArray(summary) && summary.length ? summary[0] : null;
+
+    uxTotalSessions.textContent = fmtInt(totalSessions);
+    uxTopLabel.textContent = top ? labelName(top.label) : "—";
+    renderLabelBars(summary);
+    renderInsights(insightData);
   }
 
   async function showMetrics(key) {
@@ -126,10 +308,20 @@ events=${m.totals.events}  goals=${(m.goals||[]).join(", ")}`;
   }
 
   async function render() {
-    const exps = await fetchExperiments();
+    const [exps, sessions, labelSummary, insightData] = await Promise.all([
+      fetchExperiments(),
+      fetchSessions(),
+      fetchLabelsSummary(),
+      fetchInsights()
+    ]);
+
     expTbody.innerHTML = exps.length ? exps.map(rowHtml).join("") : `
       <tr><td colspan="6" class="muted">실험이 없습니다. /editor에서 Real 적용을 눌러 생성하세요.</td></tr>
     `;
+
+    renderSessions(sessions);
+    renderLabelSummary(labelSummary);
+    renderUxOverview(labelSummary, insightData);
   }
 
   expTbody.addEventListener("click", async (e) => {
