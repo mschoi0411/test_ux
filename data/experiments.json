@@ -1,0 +1,212 @@
+{
+  "experiments": [
+    {
+      "id": "exp_seed_checkout_v1",
+      "site_id": "ab-sample",
+      "key": "exp_checkout_cta_v1",
+      "url_prefix": "/checkout",
+      "traffic": {
+        "A": 50,
+        "B": 50
+      },
+      "goals": [
+        "checkout_complete"
+      ],
+      "variants": {
+        "A": [],
+        "B": [
+          {
+            "selector": "[data-track-id='pay_btn']",
+            "actions": [
+              {
+                "type": "set_text",
+                "value": "✅ 결제하고 끝내기"
+              }
+            ]
+          }
+        ]
+      },
+      "status": "running",
+      "hypothesis": "결제 CTA 가독성 개선 시 checkout_complete가 상승한다.",
+      "source": "seed",
+      "updated_at": 1773200000000,
+      "published_at": 1773200000000,
+      "version": 1
+    },
+    {
+      "id": "exp_seed_detail_v1",
+      "site_id": "ab-sample",
+      "key": "exp_detail_cta_v1",
+      "url_prefix": "/detail",
+      "traffic": {
+        "A": 50,
+        "B": 50
+      },
+      "goals": [
+        "checkout_complete"
+      ],
+      "variants": {
+        "A": [],
+        "B": [
+          {
+            "selector": "[data-track-id='buy_btn']",
+            "actions": [
+              {
+                "type": "set_text",
+                "value": "지금 구매"
+              }
+            ]
+          }
+        ]
+      },
+      "status": "running",
+      "hypothesis": "상세 CTA 문구 강화로 checkout 진입률이 상승한다.",
+      "source": "seed",
+      "updated_at": 1773200000000,
+      "published_at": 1773200000000,
+      "version": 1
+    },
+    {
+      "id": "exp_seed_main_v1",
+      "site_id": "ab-sample",
+      "key": "exp_main_cta_v1",
+      "url_prefix": "/",
+      "traffic": {
+        "A": 50,
+        "B": 50
+      },
+      "goals": [
+        "checkout_complete"
+      ],
+      "variants": {
+        "A": [],
+        "B": [
+          {
+            "selector": "[data-track-id='cta_go_detail']",
+            "actions": [
+              {
+                "type": "set_text",
+                "value": "🔥 인기 상품 바로 보기"
+              }
+            ]
+          }
+        ]
+      },
+      "status": "running",
+      "hypothesis": "메인 CTA 강조로 detail 이동률이 상승한다.",
+      "source": "seed",
+      "updated_at": 1773200000000,
+      "published_at": 1773200000000,
+      "version": 1
+    },
+    {
+      "id": "exp_seed_checkout_v2_draft",
+      "site_id": "ab-sample",
+      "key": "exp_checkout_cta_v2_draft",
+      "url_prefix": "/checkout",
+      "traffic": {
+        "A": 50,
+        "B": 50
+      },
+      "goals": [
+        "checkout_complete"
+      ],
+      "variants": {
+        "A": [],
+        "B": [
+          {
+            "selector": "[data-track-id='pay_btn']",
+            "actions": [
+              {
+                "type": "set_text",
+                "value": "지금 결제하고 바로 출발하기"
+              }
+            ]
+          }
+        ]
+      },
+      "status": "draft",
+      "hypothesis": "CTA urgency 문구가 전환에 유의미한 영향을 준다.",
+      "source": "seed",
+      "updated_at": 1773210000000,
+      "published_at": null,
+      "version": 1
+    },
+    {
+      "id": "exp_b8dab188",
+      "site_id": "ab-sample",
+      "key": "exp_checkout_cta_v1_chat_1773229250161",
+      "parent_key": null,
+      "url_prefix": "/checkout",
+      "traffic": {
+        "A": 50,
+        "B": 50
+      },
+      "goals": [
+        "checkout_complete"
+      ],
+      "variants": {
+        "A": [],
+        "B": [
+          {
+            "selector": "[data-track-id='pay_btn']",
+            "actions": [
+              {
+                "type": "set_text",
+                "value": "지금 주문하고 내일 받아보세요"
+              }
+            ]
+          },
+          {
+            "type": "inject_css",
+            "css": "[data-track-id='pay_btn']{font-weight:800;box-shadow:0 0 0 3px rgba(106,169,255,0.24);}"
+          }
+        ]
+      },
+      "status": "draft",
+      "hypothesis": "If we improve clarity on [data-track-id='pay_btn'], then conversion should improve because current issue cluster is order_status.",
+      "source": "analytics_copilot",
+      "updated_at": 1773229250162,
+      "published_at": null,
+      "version": 1
+    },
+    {
+      "id": "exp_bc30cf19",
+      "site_id": "ab-sample",
+      "key": "exp_checkout_cta_v1_chat_1773231403913",
+      "parent_key": null,
+      "url_prefix": "/checkout",
+      "traffic": {
+        "A": 50,
+        "B": 50
+      },
+      "goals": [
+        "checkout_complete"
+      ],
+      "variants": {
+        "A": [],
+        "B": [
+          {
+            "selector": "[data-track-id='pay_btn']",
+            "actions": [
+              {
+                "type": "set_text",
+                "value": "지금 주문하고 내일 받아보세요"
+              }
+            ]
+          },
+          {
+            "type": "inject_css",
+            "css": "[data-track-id='pay_btn']{font-weight:800;box-shadow:0 0 0 3px rgba(106,169,255,0.24);}"
+          }
+        ]
+      },
+      "status": "draft",
+      "hypothesis": "If we improve clarity on [data-track-id='pay_btn'], then conversion should improve because current issue cluster is order_status.",
+      "source": "analytics_copilot",
+      "updated_at": 1773231403913,
+      "published_at": null,
+      "version": 1
+    }
+  ]
+}

@@ -226,3 +226,112 @@ body {
   border-radius: 14px;
   border: 1px solid var(--line);
 }
+
+.commerceChatRoot {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.commerceChatToggle {
+  border: 1px solid rgba(106, 169, 255, 0.55);
+  background: rgba(106, 169, 255, 0.16);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.commerceChatPanel {
+  width: min(360px, calc(100vw - 24px));
+  height: 480px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #121620;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
+}
+
+.commerceChatTitle {
+  padding: 12px;
+  font-weight: 800;
+  border-bottom: 1px solid var(--line);
+}
+
+.commerceQuick {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 10px;
+  border-bottom: 1px solid var(--line);
+}
+
+.commerceQuickBtn {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.commerceMessages {
+  flex: 1;
+  overflow: auto;
+  padding: 10px;
+}
+
+.commerceMsg {
+  margin-bottom: 8px;
+  border-radius: 10px;
+  padding: 8px 10px;
+  white-space: pre-wrap;
+  line-height: 1.4;
+  font-size: 13px;
+}
+
+.commerceMsg.user {
+  background: rgba(106, 169, 255, 0.15);
+  border: 1px solid rgba(106, 169, 255, 0.3);
+}
+
+.commerceMsg.assistant {
+  background: rgba(59, 214, 113, 0.1);
+  border: 1px solid rgba(59, 214, 113, 0.25);
+}
+
+.commerceInputWrap {
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  border-top: 1px solid var(--line);
+}
+
+.commerceInput {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px;
+  resize: none;
+}
+
+.commerceSend {
+  border: 1px solid rgba(106, 169, 255, 0.55);
+  background: rgba(106, 169, 255, 0.16);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-weight: 700;
+  cursor: pointer;
+}

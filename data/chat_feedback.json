@@ -1,0 +1,20 @@
+{
+  "feedback": [
+    {
+      "id": "fb_seed_1",
+      "created_at": 1771901100000,
+      "sessionId": "commerce_seed_1",
+      "agent": "commerce_support",
+      "rating": 4,
+      "comment": "주문 조회 응답은 빨랐지만 환불 안내는 좀 더 자세하면 좋겠어요."
+    },
+    {
+      "id": "fb_10def977",
+      "created_at": 1773225935477,
+      "sessionId": "test-session",
+      "agent": "commerce_support",
+      "rating": 5,
+      "comment": "ok"
+    }
+  ]
+}

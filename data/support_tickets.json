@@ -1,0 +1,81 @@
+{
+  "tickets": [
+    {
+      "id": "ticket_seed_1",
+      "userId": "guest-123",
+      "orderId": "ORD-1002",
+      "category": "shipping",
+      "message": "배송 지연 문의",
+      "priority": "normal",
+      "source": "seed",
+      "status": "open",
+      "createdAt": 1771900000000
+    },
+    {
+      "id": "ticket_ac81346b",
+      "userId": "guest-123",
+      "orderId": null,
+      "category": "fallback",
+      "message": "ORD-1001 �ֹ� ���� �˷���",
+      "priority": "normal",
+      "source": "commerce_support_fallback",
+      "status": "open",
+      "createdAt": 1773225306391
+    },
+    {
+      "id": "ticket_51e09f7f",
+      "userId": "guest-123",
+      "orderId": "ORD-1002",
+      "category": "refund",
+      "message": "Eligibility failed: refund_requires_delivery. User request: refund please",
+      "priority": "normal",
+      "source": "commerce_support",
+      "status": "open",
+      "createdAt": 1773225338886
+    },
+    {
+      "id": "ticket_a954c798",
+      "userId": "guest-123",
+      "orderId": "ORD-1002",
+      "category": "refund",
+      "message": "Eligibility failed: refund_requires_delivery. User request: 환불 가능한지 확인해줘",
+      "priority": "normal",
+      "source": "commerce_support",
+      "status": "open",
+      "createdAt": 1773226367245
+    },
+    {
+      "id": "ticket_7b676d6c",
+      "userId": "guest-123",
+      "orderId": null,
+      "category": "handoff",
+      "message": "상담원 연결해줘",
+      "priority": "high",
+      "source": "handoff_to_human",
+      "status": "open",
+      "createdAt": 1773226367992
+    },
+    {
+      "id": "ticket_9aa61520",
+      "userId": "guest-123",
+      "orderId": "ORD-1002",
+      "category": "refund",
+      "message": "Eligibility failed: refund_requires_delivery. User request: refund please",
+      "priority": "normal",
+      "source": "commerce_support",
+      "status": "open",
+      "createdAt": 1773229265480
+    },
+    {
+      "id": "ticket_ac14c5f0",
+      "userId": "guest-123",
+      "orderId": "ORD-1002",
+      "category": "cancel",
+      "message": "Eligibility failed: cancel_window_expired. User request: cancel please",
+      "priority": "normal",
+      "source": "commerce_support",
+      "status": "open",
+      "createdAt": 1773229265539
+    }
+  ]
+}

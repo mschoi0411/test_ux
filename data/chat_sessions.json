@@ -1,0 +1,224 @@
+{
+  "sessions": [
+    {
+      "sessionId": "commerce_seed_1",
+      "agent": "commerce_support",
+      "userId": "guest-123",
+      "startedAt": 1771901000000,
+      "updatedAt": 1771901060000,
+      "messageCount": 4
+    },
+    {
+      "sessionId": "chat_39efd69b",
+      "agent": "analytics_copilot",
+      "userId": "guest",
+      "startedAt": 1773225306325,
+      "updatedAt": 1773225306326,
+      "messageCount": 2
+    },
+    {
+      "sessionId": "chat_a0fdbb36",
+      "agent": "commerce_support",
+      "userId": "guest-123",
+      "startedAt": 1773225306393,
+      "updatedAt": 1773225306395,
+      "messageCount": 2
+    },
+    {
+      "sessionId": "chat_4a73e253",
+      "agent": "commerce_support",
+      "userId": "guest-123",
+      "startedAt": 1773225317135,
+      "updatedAt": 1773225317137,
+      "messageCount": 2
+    },
+    {
+      "sessionId": "chat_f2f5c11d",
+      "agent": "commerce_support",
+      "userId": "guest-123",
+      "startedAt": 1773225317206,
+      "updatedAt": 1773225317207,
+      "messageCount": 2
+    },
+    {
+      "sessionId": "chat_fb76d718",
+      "agent": "commerce_support",
+      "userId": "guest-123",
+      "startedAt": 1773225338889,
+      "updatedAt": 1773225338890,
+      "messageCount": 2
+    },
+    {
+      "sessionId": "chat_d9a08665",
+      "agent": "analytics_copilot",
+      "userId": "guest",
+      "startedAt": 1773225347384,
+      "updatedAt": 1773225347385,
+      "messageCount": 2
+    },
+    {
+      "sessionId": "chat_04d8edbc",
+      "agent": "analytics_copilot",
+      "userId": "guest",
+      "startedAt": 1773225365661,
+      "updatedAt": 1773225365664,
+      "messageCount": 2
+    },
+    {
+      "sessionId": "chat_08aa7da8",
+      "agent": "commerce_support",
+      "userId": "guest-123",
+      "startedAt": 1773225770644,
+      "updatedAt": 1773225770645,
+      "messageCount": 2
+    },
+    {
+      "sessionId": "chat_6acb7b3f",
+      "agent": "commerce_support",
+      "userId": "guest-123",
+      "startedAt": 1773225873542,
+      "updatedAt": 1773225873543,
+      "messageCount": 2
+    },
+    {
+      "sessionId": "chat_0a6947e4",
+      "agent": "commerce_support",
+      "userId": "guest-123",
+      "startedAt": 1773225895789,
+      "updatedAt": 1773225895791,
+      "messageCount": 2
+    },
+    {
+      "sessionId": "chat_84cf6b5d",
+      "agent": "commerce_support",
+      "userId": "guest-123",
+      "startedAt": 1773225912277,
+      "updatedAt": 1773225912278,
+      "messageCount": 2
+    },
+    {
+      "sessionId": "commerce_e9c97176",
+      "agent": "commerce_support",
+      "userId": "guest-123",
+      "startedAt": 1773226359929,
+      "updatedAt": 1773226389493,
+      "messageCount": 12
+    },
+    {
+      "sessionId": "analytics_17c790fc",
+      "agent": "analytics_copilot",
+      "userId": "guest",
+      "startedAt": 1773226434912,
+      "updatedAt": 1773226441788,
+      "messageCount": 8
+    },
+    {
+      "sessionId": "analytics_566aa74c",
+      "agent": "analytics_copilot",
+      "userId": "guest",
+      "startedAt": 1773226456058,
+      "updatedAt": 1773226456060,
+      "messageCount": 2
+    },
+    {
+      "sessionId": "chat_03df7b86",
+      "agent": "analytics_copilot",
+      "userId": "guest",
+      "startedAt": 1773229235829,
+      "updatedAt": 1773229235831,
+      "messageCount": 2,
+      "lastPage": "dashboard",
+      "lastIntent": "general"
+    },
+    {
+      "sessionId": "chat_b86437ac",
+      "agent": "analytics_copilot",
+      "userId": "guest",
+      "startedAt": 1773229235914,
+      "updatedAt": 1773229235915,
+      "messageCount": 2,
+      "lastPage": "dashboard",
+      "lastIntent": "experiment"
+    },
+    {
+      "sessionId": "chat_d5941b2d",
+      "agent": "analytics_copilot",
+      "userId": "guest",
+      "startedAt": 1773229250098,
+      "updatedAt": 1773229250099,
+      "messageCount": 2,
+      "lastPage": "dashboard",
+      "lastIntent": "experiment"
+    },
+    {
+      "sessionId": "chat_a91cbd17",
+      "agent": "analytics_copilot",
+      "userId": "guest",
+      "startedAt": 1773229250164,
+      "updatedAt": 1773229250166,
+      "messageCount": 2,
+      "lastPage": "dashboard",
+      "lastIntent": "experiment"
+    },
+    {
+      "sessionId": "chat_3c3878d1",
+      "agent": "commerce_support",
+      "userId": "guest-123",
+      "startedAt": 1773229265482,
+      "updatedAt": 1773229265483,
+      "messageCount": 2,
+      "lastPage": "checkout",
+      "lastIntent": "refund"
+    },
+    {
+      "sessionId": "chat_ceaea8d0",
+      "agent": "commerce_support",
+      "userId": "guest-123",
+      "startedAt": 1773229265540,
+      "updatedAt": 1773229265542,
+      "messageCount": 2,
+      "lastPage": "checkout",
+      "lastIntent": "cancel"
+    },
+    {
+      "sessionId": "chat_9b6dc279",
+      "agent": "analytics_copilot",
+      "userId": "guest",
+      "startedAt": 1773229309089,
+      "updatedAt": 1773229309091,
+      "messageCount": 2,
+      "lastPage": "dashboard",
+      "lastIntent": "experiment"
+    },
+    {
+      "sessionId": "chat_f73e236b",
+      "agent": "commerce_support",
+      "userId": "guest-123",
+      "startedAt": 1773229324579,
+      "updatedAt": 1773229324581,
+      "messageCount": 2,
+      "lastPage": "checkout",
+      "lastIntent": "order_status"
+    },
+    {
+      "sessionId": "analytics_21202f28",
+      "agent": "analytics_copilot",
+      "userId": "guest",
+      "startedAt": 1773230137434,
+      "updatedAt": 1773230139763,
+      "messageCount": 6,
+      "lastPage": "dashboard",
+      "lastIntent": "general"
+    },
+    {
+      "sessionId": "chat_ed0e25cf",
+      "agent": "analytics_copilot",
+      "userId": "guest",
+      "startedAt": 1773231403915,
+      "updatedAt": 1773231403917,
+      "messageCount": 2,
+      "lastPage": "dashboard",
+      "lastIntent": "experiment"
+    }
+  ]
+}

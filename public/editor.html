@@ -115,6 +115,21 @@
         <h3>디버그</h3>
         <div class="mono log" id="logBox"></div>
       </div>
+
+      <div class="card analyticsChatCard" id="editorAnalyticsChatRoot">
+        <h3>Analytics Copilot</h3>
+        <div class="quickBtns">
+          <button class="btn" data-q="이 요소 개선안 제안">이 요소 개선안 제안</button>
+          <button class="btn" data-q="카피 5개 생성">카피 5개 생성</button>
+          <button class="btn" data-q="B안 JSON 생성">B안 JSON 생성</button>
+          <button class="btn" data-q="실험 초안 만들기">실험 초안 만들기</button>
+        </div>
+        <div class="chatMessages"></div>
+        <div class="chatComposer">
+          <textarea class="chatInput" rows="2" placeholder="선택 요소 기반 개선안을 요청해보세요"></textarea>
+          <button class="btn primary chatSendBtn">전송</button>
+        </div>
+      </div>
     </section>
 
     <section class="stage">
@@ -129,6 +144,7 @@
     </section>
   </main>
 
+  <script src="/analytics-chat.js"></script>
   <script src="/editor.js"></script>
 </body>
 </html>

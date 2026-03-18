@@ -1,0 +1,278 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "AB Sample API",
+    "version": "1.0.0",
+    "description": "UX/A-B experiment platform API with analytics and commerce chat agents."
+  },
+  "servers": [
+    { "url": "http://localhost:3000" }
+  ],
+  "paths": {
+    "/collect": {
+      "post": {
+        "summary": "Collect client events",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "events": {
+                    "type": "array",
+                    "items": { "type": "object", "additionalProperties": true }
+                  }
+                },
+                "required": ["events"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Events accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "received": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/chat": {
+      "post": {
+        "summary": "Unified chat endpoint",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "agent": {
+                    "type": "string",
+                    "enum": ["analytics_copilot", "commerce_support"]
+                  },
+                  "messages": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "role": { "type": "string", "enum": ["user", "assistant", "system", "tool"] },
+                        "content": { "type": "string" }
+                      },
+                      "required": ["role", "content"]
+                    }
+                  },
+                  "context": {
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                },
+                "required": ["agent", "messages"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Chat response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "answer": { "type": "string" },
+                    "actions": {
+                      "type": "array",
+                      "items": { "type": "object", "additionalProperties": true }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "agent": { "type": "string" },
+                        "llmMode": { "type": "string" },
+                        "usedTools": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "tool": { "type": "string" },
+                              "input": { "type": "object", "additionalProperties": true },
+                              "resultPreview": { "oneOf": [{ "type": "object" }, { "type": "string" }, { "type": "array" }] }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/event-summary": {
+      "get": {
+        "summary": "Event funnel and element summary",
+        "parameters": [
+          { "name": "site_id", "in": "query", "schema": { "type": "string", "default": "ab-sample" } },
+          { "name": "page", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Summary result"
+          }
+        }
+      }
+    },
+    "/api/chat-issues-summary": {
+      "get": {
+        "summary": "Commerce chat issue analytics",
+        "parameters": [
+          { "name": "page", "in": "query", "schema": { "type": "string" } },
+          { "name": "productId", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Issue summary result"
+          }
+        }
+      }
+    },
+    "/api/experiments/draft": {
+      "post": {
+        "summary": "Save experiment draft",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "site_id": { "type": "string" },
+                  "key": { "type": "string" },
+                  "url_prefix": { "type": "string" },
+                  "traffic": { "type": "object", "additionalProperties": true },
+                  "goals": { "type": "array", "items": { "type": "string" } },
+                  "variants": { "type": "object", "additionalProperties": true },
+                  "hypothesis": { "type": "string" },
+                  "source": { "type": "string" }
+                },
+                "required": ["key", "url_prefix"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Draft saved" }
+        }
+      }
+    },
+    "/api/chat/feedback": {
+      "post": {
+        "summary": "Save chat feedback",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "sessionId": { "type": "string" },
+                  "agent": { "type": "string" },
+                  "rating": { "type": "number" },
+                  "comment": { "type": "string" }
+                },
+                "required": ["sessionId", "agent"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Feedback saved" }
+        }
+      }
+    },
+    "/api/products": {
+      "get": {
+        "summary": "List/search products",
+        "parameters": [
+          { "name": "q", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Product list" }
+        }
+      }
+    },
+    "/api/faq": {
+      "get": {
+        "summary": "FAQ/policy search",
+        "parameters": [
+          { "name": "q", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "FAQ results" }
+        }
+      }
+    },
+    "/api/orders/{id}": {
+      "get": {
+        "summary": "Get order detail",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "userId", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Order found" },
+          "404": { "description": "Order not found" }
+        }
+      }
+    },
+    "/api/experiments": {
+      "get": {
+        "summary": "List experiments",
+        "parameters": [
+          { "name": "site_id", "in": "query", "schema": { "type": "string", "default": "ab-sample" } }
+        ],
+        "responses": {
+          "200": { "description": "Experiment list" }
+        }
+      }
+    },
+    "/api/metrics": {
+      "get": {
+        "summary": "A/B metrics by experiment key",
+        "parameters": [
+          { "name": "site_id", "in": "query", "schema": { "type": "string", "default": "ab-sample" } },
+          { "name": "key", "in": "query", "schema": { "type": "string" }, "required": true }
+        ],
+        "responses": {
+          "200": { "description": "Metrics result" }
+        }
+      }
+    },
+    "/api/config": {
+      "get": {
+        "summary": "Runtime experiment config for SDK",
+        "parameters": [
+          { "name": "site_id", "in": "query", "schema": { "type": "string", "default": "ab-sample" } },
+          { "name": "url", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Config result" }
+        }
+      }
+    }
+  }
+}

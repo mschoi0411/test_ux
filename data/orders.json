@@ -1,0 +1,34 @@
+{
+  "orders": [
+    {
+      "id": "ORD-1001",
+      "userId": "guest-123",
+      "items": [{ "productId": "neo-coffee", "qty": 1 }],
+      "status": "delivered",
+      "totalAmount": 12900,
+      "createdAt": 1771800000000,
+      "shippedAt": 1771820000000,
+      "deliveredAt": 1771880000000,
+      "requestState": "none"
+    },
+    {
+      "id": "ORD-1002",
+      "userId": "guest-123",
+      "items": [{ "productId": "luna-tea", "qty": 1 }],
+      "status": "processing",
+      "totalAmount": 9900,
+      "createdAt": 1771886400000,
+      "requestState": "none"
+    },
+    {
+      "id": "ORD-1003",
+      "userId": "guest-999",
+      "items": [{ "productId": "aurora-mug", "qty": 2 }],
+      "status": "shipped",
+      "totalAmount": 31800,
+      "createdAt": 1771893600000,
+      "shippedAt": 1771900000000,
+      "requestState": "none"
+    }
+  ]
+}

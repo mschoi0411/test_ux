@@ -175,3 +175,26 @@ iframe{width:100%; height:100%; border:0; display:block;}
 .changeCode{font-size:12px; margin-top:6px; color:#dbe7ff;}
 .changeBtns{display:flex; gap:6px; flex-wrap:wrap;}
 .smallBtn{padding:6px 8px; font-size:12px; font-weight:800; border-radius:9px;}
+
+.analyticsChatCard .quickBtns{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;}
+.chatMessages{
+  min-height:160px;
+  max-height:280px;
+  overflow:auto;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:10px;
+  background:rgba(255,255,255,0.02);
+}
+.chatMsg{padding:8px 10px;border-radius:10px;margin-bottom:8px;white-space:pre-wrap;line-height:1.4;}
+.chatMsg.user{background:rgba(106,169,255,0.15);border:1px solid rgba(106,169,255,0.3);}
+.chatMsg.assistant{background:rgba(59,214,113,0.10);border:1px solid rgba(59,214,113,0.28);}
+.chatComposer{display:flex;gap:8px;margin-top:10px;align-items:flex-end;}
+.chatInput{
+  flex:1;
+  background:rgba(255,255,255,0.04);
+  color:var(--text);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:10px;
+}

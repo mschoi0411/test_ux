@@ -107,8 +107,27 @@
         방문할 때마다 유저가 A/B로 고정됩니다(anon_user_id 기반). 다른 유저처럼 보려면 시크릿 창 또는 localStorage 삭제.
       </div>
     </section>
+
+    <section class="card analyticsChatCard" id="analyticsChatRoot">
+      <div class="cardHead">
+        <h2>Analytics Copilot</h2>
+        <div class="muted">대시보드 문맥 기반 실험 분석/초안 생성</div>
+      </div>
+      <div class="quickBtns">
+        <button class="btn" data-q="현재 실험 요약">현재 실험 요약</button>
+        <button class="btn" data-q="A/B 차이 설명">A/B 차이 설명</button>
+        <button class="btn" data-q="다음 실험안 생성">다음 실험안 생성</button>
+        <button class="btn" data-q="고객 질문 기반 문제점 분석">고객 질문 기반 문제점 분석</button>
+      </div>
+      <div class="chatMessages"></div>
+      <div class="chatComposer">
+        <textarea class="chatInput" rows="2" placeholder="예: checkout 실험의 병목과 다음 draft를 만들어줘"></textarea>
+        <button class="btn primary chatSendBtn">전송</button>
+      </div>
+    </section>
   </main>
 
+  <script src="/analytics-chat.js"></script>
   <script src="/dashboard.js"></script>
 </body>
 </html>

@@ -71,7 +71,7 @@ function getAbMode() {
   const sp = new URLSearchParams(location.search);
   // __ab_mode=per_load  -> 새로고침마다 랜덤
   // __ab_mode=sticky    -> 기존처럼 고정
-  return sp.get("__ab_mode") || "per_load"; // ✅ 기본을 per_load로!
+  return sp.get("__ab_mode") || "sticky";
 }
 
 function getAbForce() {

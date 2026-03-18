@@ -15,6 +15,12 @@
   const countsBox = document.getElementById("countsBox");
   const topA = document.getElementById("topA");
   const topB = document.getElementById("topB");
+  let selectedExperimentKey = null;
+  const analyticsChat = window.AnalyticsChat?.init({
+    rootId: "analyticsChatRoot",
+    page: "dashboard",
+    getContext: () => ({ selectedExperimentKey }),
+  });
 
   function fmtPct(x) {
     if (typeof x !== "number" || !isFinite(x)) return "—";
@@ -63,6 +69,8 @@
   }
 
   async function showMetrics(key) {
+    selectedExperimentKey = key;
+    analyticsChat?.setSelectedExperimentKey(key);
     metricsCard.style.display = "block";
     metricKeyEl.textContent = key;
 
@@ -130,6 +138,12 @@ events=${m.totals.events}  goals=${(m.goals||[]).join(", ")}`;
     expTbody.innerHTML = exps.length ? exps.map(rowHtml).join("") : `
       <tr><td colspan="6" class="muted">실험이 없습니다. /editor에서 Real 적용을 눌러 생성하세요.</td></tr>
     `;
+
+    if (!selectedExperimentKey && exps.length) {
+      const running = exps.find((x) => x.status === "running");
+      selectedExperimentKey = (running || exps[0]).key;
+      analyticsChat?.setSelectedExperimentKey(selectedExperimentKey);
+    }
   }
 
   expTbody.addEventListener("click", async (e) => {
@@ -140,6 +154,8 @@ events=${m.totals.events}  goals=${(m.goals||[]).join(", ")}`;
 
     try {
       if (act === "metrics") {
+        selectedExperimentKey = btn.dataset.key || null;
+        analyticsChat?.setSelectedExperimentKey(selectedExperimentKey);
         await showMetrics(btn.dataset.key);
       } else if (act === "pause") {
         await setStatus(btn.dataset.id, "paused");

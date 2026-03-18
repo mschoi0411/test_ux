@@ -46,6 +46,41 @@
   let lastSelected = null;
   let changesB = [];
 
+  const analyticsChat = window.AnalyticsChat?.init({
+    rootId: "editorAnalyticsChatRoot",
+    page: "editor",
+    getContext: () => ({
+      selectedExperimentKey: (expKeyInput.value || "").trim() || null,
+      selectedElement: lastSelected,
+    }),
+    onEditorChanges: (incomingChanges) => {
+      if (!Array.isArray(incomingChanges) || incomingChanges.length === 0) return;
+      if (changesB.length > 0) {
+        const shouldReplace = confirm("기존 Variant B 변경이 있습니다. 챗봇 제안으로 교체할까요?");
+        if (!shouldReplace) {
+          log("copilot changes ignored (kept existing changesB)");
+          return;
+        }
+      }
+      changesB = incomingChanges;
+      renderChangesList();
+      jsonBox.value = JSON.stringify({ variantB: changesB }, null, 2);
+      if (currentVariant === "B") applyPreviewNow();
+      log(`copilot changes imported: ${changesB.length}`);
+    },
+    onExperimentDraft: (draft) => {
+      if (!draft) return;
+      if (draft.key) expKeyInput.value = draft.key;
+      if (draft.target_page) urlPrefixInput.value = draft.target_page;
+      if (Array.isArray(draft.variant_b_changes) && draft.variant_b_changes.length > 0) {
+        changesB = draft.variant_b_changes;
+        renderChangesList();
+        if (currentVariant === "B") applyPreviewNow();
+      }
+      log("copilot draft synced to editor (not saved automatically)");
+    },
+  });
+
   function log(msg) {
     const t = new Date().toLocaleTimeString();
     logBox.textContent = `[${t}] ${msg}\n` + logBox.textContent;
@@ -412,6 +447,7 @@
     if (data.type === "EDITOR_ELEMENT_SELECTED") {
       statusText.textContent = "요소 선택됨 ✅";
       lastSelected = data;
+      analyticsChat?.setSelectedElement(lastSelected);
       renderSelected(lastSelected);
       if (lastSelected.text) actionValue.placeholder = `예: ${lastSelected.text.slice(0, 30)}...`;
       log(`selected -> ${data.selector}`);
